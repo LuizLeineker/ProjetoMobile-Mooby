@@ -46,7 +46,7 @@ fun Navigation(){
             Main(navController)
         }
         composable("transaction"){
-            Transaction(navController)
+            Transactions(navController)
         }
         composable("insights"){
             Insights(navController)
@@ -104,7 +104,7 @@ fun Main(navController: NavController){
 }
 
 @Composable
-fun Transaction(navController: NavController){
+fun Transactions(navController: NavController){
     Text("Dados gastos", Modifier.padding(40.dp), fontSize = 24.sp)
 }
 
