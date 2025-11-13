@@ -49,6 +49,7 @@ dependencies {
     implementation("androidx.room:room-runtime:2.8.3")
     implementation("androidx.room:room-ktx:2.8.3")
     implementation(libs.androidx.navigation.compose)
+    implementation(libs.firebase.common.ktx)
     ksp("androidx.room:room-compiler:2.8.3")
 
     // VIEWMODEL

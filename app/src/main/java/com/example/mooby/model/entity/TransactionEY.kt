@@ -6,7 +6,7 @@ import androidx.room.ForeignKey
 import androidx.room.Index
 import androidx.room.PrimaryKey
 import com.example.mooby.utils.Helper
-
+// estava o arquivo como "Transaction", porem deu conflito, ai virou TransactionEY
 @Entity(
     tableName = Helper.TABLE_TRANSACTION,
     foreignKeys = [
@@ -19,7 +19,7 @@ import com.example.mooby.utils.Helper
     ],
     indices = [Index(value = [Helper.USER_ID])]
 )
-data class Transaction(
+data class TransactionEY(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = Helper.TRANSACTION_ID)
     val id: Int = 0,

@@ -6,7 +6,7 @@ import com.example.mooby.utils.Helper
 
 // Para o user será feito utilizado apenas registro de novos usuario e busca para o login!
 @Dao
-interface UserDao {
+interface UserDAO {
 
 
     // Create

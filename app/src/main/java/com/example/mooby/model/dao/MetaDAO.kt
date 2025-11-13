@@ -6,7 +6,7 @@ import com.example.mooby.utils.Helper
 import kotlinx.coroutines.flow.Flow
 
 @Dao
-interface MetaDao {
+interface MetaDAO {
     // C - CREATE
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertMeta(meta: Meta): Long
@@ -23,5 +23,5 @@ interface MetaDao {
     @Delete
     suspend fun deleteMeta(meta: Meta)
 
-
 }
+

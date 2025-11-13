@@ -1,34 +1,34 @@
 package com.example.mooby.model.dao
 
 import androidx.room.*
-import com.example.mooby.model.entity.User
 import com.example.mooby.model.dto.TypeSummary  //criado excluisvamente para o relatorio mensal
+import com.example.mooby.model.entity.TransactionEY
 import com.example.mooby.utils.Helper
 import kotlinx.coroutines.flow.Flow
 
 //CRUD
 @Dao
-interface TransactionDao {
+interface TransactionDAO {
     // C - CREATE
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertTransaction(transaction: Transaction): Long
+    suspend fun insertTransaction(transactionEY: com.example.mooby.model.entity.TransactionEY): Long
 
     // R - READ  (Todos os gastos por ordem de data)
     @Query("SELECT * FROM ${Helper.TABLE_TRANSACTION} WHERE ${Helper.USER_ID} = :userId ORDER BY ${Helper.DATA} DESC")
-    fun getTransactionsByUserId(userId: Int): Flow<List<Transaction>>
+    fun getTransactionsByUserId(userId: Int): Flow<List<TransactionEY>>
 
     // U - UPDATE
     @Update
-    suspend fun updateTransaction(transaction: Transaction)
+    suspend fun updateTransaction(transactionEY: com.example.mooby.model.entity.TransactionEY)
 
     // D - DELETE
     @Delete
-    suspend fun deleteTransaction(transaction: Transaction)
+    suspend fun deleteTransaction(transaction: TransactionEY)
 
 
     // S - SEARCH - Busca por categoria
     @Query("SELECT * FROM ${Helper.TABLE_TRANSACTION} WHERE ${Helper.USER_ID} = :userId AND ${Helper.CATEGORY} LIKE '%' || :category || '%' ORDER BY ${Helper.DATA} DESC")
-    fun getTransactionsByCategory(userId: Int, category: String): Flow<List<Transaction>>
+    fun getTransactionsByCategory(userId: Int, category: String): Flow<List<TransactionEY>>
 
     // Relatorio Finaceiro Mensal
     // Data precisa estar em ordem: "yyyy-MM-dd"
