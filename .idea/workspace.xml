@@ -11,10 +11,9 @@
   <component name="ChangeListManager">
     <list default="true" id="5b38ec49-3fe5-4f5b-b134-90ef110c1d90" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/mooby/model/dao/MetaDAO.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/mooby/model/dao/MetaDAO.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/mooby/model/dao/TrasactionDAO.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/mooby/model/dao/TrasactionDAO.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/mooby/model/entity/Meta.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/mooby/model/entity/Meta.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/mooby/model/entity/Transaction.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/mooby/model/entity/Transaction.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/mooby/model/entity/User.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/mooby/model/entity/User.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/mooby/utils/Helper.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/mooby/utils/Helper.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,7 +44,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Kotlin Data Class" />
         <option value="Kotlin Class" />
+        <option value="Class" />
       </list>
     </option>
   </component>

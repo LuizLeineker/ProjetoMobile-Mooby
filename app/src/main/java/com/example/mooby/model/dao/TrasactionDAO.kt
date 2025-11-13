@@ -2,6 +2,7 @@ package com.example.mooby.model.dao
 
 import androidx.room.*
 import com.example.mooby.model.entity.User
+import com.example.mooby.model.dto.TypeSummary  //criado excluisvamente para o relatorio mensal
 import com.example.mooby.utils.Helper
 import kotlinx.coroutines.flow.Flow
 
@@ -37,11 +38,8 @@ interface TransactionDao {
         WHERE ${Helper.USER_ID} = :userId AND substr(${Helper.DATA}, 1, 7) = :monthFormat
         GROUP BY ${Helper.TIPO}
     """)
+    // Foi necessario implementar uma dataclass - DTO (Objeto de transferencia de dados)
     suspend fun getMonthlySummaryByType(userId: Int, monthFormat: String): List<TypeSummary>
 
-    // Classe para receber o resultado do summary
-    data class TypeSummary(
-        val tipo: String,
-        val total: Double
-    )
+
 }

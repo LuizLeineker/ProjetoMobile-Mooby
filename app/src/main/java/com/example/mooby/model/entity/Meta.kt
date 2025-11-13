@@ -7,6 +7,7 @@ import androidx.room.Index
 import androidx.room.PrimaryKey
 import com.example.mooby.utils.Helper
 
+//room - banco local
 @Entity(
     tableName = Helper.TABLE_META,
     foreignKeys = [
