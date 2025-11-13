@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1073251959591",
+    "project_id": "mooby-9c624",
+    "storage_bucket": "mooby-9c624.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1073251959591:android:037688590c2ceda99bdf02",
+        "android_client_info": {
+          "package_name": "com.example.mooby"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBQom9NNT7XorloT84_GVeBeftnCs0njT4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
