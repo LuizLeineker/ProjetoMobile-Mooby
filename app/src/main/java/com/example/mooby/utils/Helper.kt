@@ -11,6 +11,7 @@ abstract class Helper {
         const val USER_ID = "userId"
         const val USERNAME = "username"
         const val EMAIL = "email"
+        const val VALUE_INITIAL = "valueInitial"
 
         // Transaction
         const val TABLE_TRANSACTION = "transaction_tb"
