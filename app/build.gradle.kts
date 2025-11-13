@@ -49,7 +49,6 @@ dependencies {
     implementation("androidx.room:room-runtime:2.8.3")
     implementation("androidx.room:room-ktx:2.8.3")
     implementation(libs.androidx.navigation.compose)
-    implementation(libs.firebase.common.ktx)
     ksp("androidx.room:room-compiler:2.8.3")
 
     // VIEWMODEL
@@ -57,8 +56,11 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.9.4")
 
     //FIREBASE
-    implementation("com.google.firebase:firebase-auth-ktx:23.2.1")
-    implementation("com.google.firebase:firebase-firestore-ktx:25.1.4")
+    // FIREBASE
+    implementation(platform("com.google.firebase:firebase-bom:33.5.1"))
+    implementation("com.google.firebase:firebase-auth-ktx")
+    implementation("com.google.firebase:firebase-firestore-ktx")
+
 
     // PADRAO
     implementation(libs.androidx.core.ktx)
