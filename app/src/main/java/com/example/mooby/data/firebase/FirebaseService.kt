@@ -1,4 +1,4 @@
-package com.example.mooby.model.firebase
+package com.example.mooby.data.firebase
 
 import com.google.firebase.firestore.FirebaseFirestore
 

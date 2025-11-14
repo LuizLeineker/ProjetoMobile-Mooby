@@ -1,4 +1,4 @@
-package com.example.mooby.model.dto
+package com.example.mooby.data.dto
 
 data class TransactionDTO(
     var id: String = "",

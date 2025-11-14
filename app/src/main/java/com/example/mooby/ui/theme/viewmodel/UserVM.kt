@@ -2,8 +2,7 @@ package com.example.mooby.ui.theme.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.mooby.model.entity.User
-import com.example.mooby.model.repository.UserRepository
+import com.example.mooby.data.entity.User
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch

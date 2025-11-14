@@ -1,7 +1,7 @@
-package com.example.mooby.model.mapper
+package com.example.mooby.data.mapper
 
-import com.example.mooby.model.dto.MetaDTO
-import com.example.mooby.model.entity.Meta
+import com.example.mooby.data.dto.MetaDTO
+import com.example.mooby.data.entity.Meta
 
 // Responsavel por conectar os valores da firebase (DTO) com os ROM (entity)
 // String -> Int

@@ -3,8 +3,7 @@ package com.example.mooby.ui.theme.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.mooby.model.entity.TransactionEY
-import com.example.mooby.model.repository.TransactionRepository
+import com.example.mooby.data.entity.TransactionEY
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
