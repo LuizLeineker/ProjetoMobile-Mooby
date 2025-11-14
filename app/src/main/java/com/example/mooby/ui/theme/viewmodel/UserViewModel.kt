@@ -3,47 +3,46 @@ package com.example.mooby.ui.theme.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mooby.data.entity.User
+import com.example.mooby.data.repository.Repository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 sealed class UserState {
     object Idle : UserState()
     object Loading : UserState()
-    object Success : UserState()
+    data class Success(val user: User?) : UserState()
     data class Error(val message: String) : UserState()
 }
 
-class UserVM(
-    private val repository: UserRepository
-) : ViewModel() {
+class UserViewModel(private val repository: Repository) : ViewModel() {
 
     private val _state = MutableStateFlow<UserState>(UserState.Idle)
-    val state: StateFlow<UserState> = _state
+    val state: StateFlow<UserState> = _state.asStateFlow()
 
-    suspend fun getUser(id: Int) = repository.getUserById(id)
+    init { fetchUser() }
 
-    fun insert(user: User) {
+    fun fetchUser() {
         viewModelScope.launch {
             try {
                 _state.value = UserState.Loading
-                repository.insertLocal(user)
-                repository.syncToFirebase(user)
-                _state.value = UserState.Success
+                val user = repository.getUser()
+                _state.value = UserState.Success(user)
             } catch (e: Exception) {
-                _state.value = UserState.Error(e.message ?: "Erro ao inserir usuário")
+                _state.value = UserState.Error(e.message ?: "Erro ao carregar usuário")
             }
         }
     }
 
-    fun update(user: User) {
+    fun saveUser(user: User) {
         viewModelScope.launch {
             try {
                 _state.value = UserState.Loading
-                repository.updateLocal(user)
-                _state.value = UserState.Success
+                repository.saveUser(user)
+                _state.value = UserState.Success(user)
             } catch (e: Exception) {
-                _state.value = UserState.Error(e.message ?: "Erro ao atualizar usuário")
+                _state.value = UserState.Error(e.message ?: "Erro ao salvar usuário")
             }
         }
     }

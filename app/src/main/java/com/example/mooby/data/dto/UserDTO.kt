@@ -1,8 +1,8 @@
 package com.example.mooby.data.dto
 
 data class UserDTO(
-    var id: String = "",
-    var name: String = "",
-    var email: String = "",
-    var valueInitial: Double = 0.0
+    val userId: String = "",
+    val name: String = "",
+    val email: String = "",
+    val saldoInicial: Double = 0.0
 )

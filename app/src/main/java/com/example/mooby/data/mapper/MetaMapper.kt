@@ -3,26 +3,24 @@ package com.example.mooby.data.mapper
 import com.example.mooby.data.dto.MetaDTO
 import com.example.mooby.data.entity.Meta
 
-// Responsavel por conectar os valores da firebase (DTO) com os ROM (entity)
-// String -> Int
-fun Meta.toDTO(): MetaDTO {
-    return MetaDTO(
-        id = this.id.toString(),
-        userId = this.userId.toString(),
-        title = this.title,
-        valueMeta = this.valueMeta,
-        progress = this.progress,
-        term = this.term
-    )
-}
-
 fun MetaDTO.toEntity(): Meta {
     return Meta(
         id = this.id.toIntOrNull() ?: 0,
-        userId = this.userId.toIntOrNull() ?: 0,
+        userId = this.userId,
         title = this.title,
-        valueMeta = this.valueMeta,
+        targetValue = this.targetValue, // DTO -> Entity
         progress = this.progress,
-        term = this.term
+        deadline = this.deadline // DTO -> Entity
+    )
+}
+
+fun Meta.toDTO(): MetaDTO {
+    return MetaDTO(
+        id = this.id.toString(),
+        userId = this.userId,
+        title = this.title,
+        targetValue = this.targetValue, // Entity -> DTO
+        progress = this.progress,
+        deadline = this.deadline // Entity -> DTO
     )
 }

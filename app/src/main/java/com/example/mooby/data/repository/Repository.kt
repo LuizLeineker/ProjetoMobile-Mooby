@@ -1,64 +1,61 @@
 package com.example.mooby.data.repository
 
-import com.example.mooby.data.dao.MetaDAO
-import com.example.mooby.data.dao.TransactionDAO
-import com.example.mooby.data.dao.UserDAO
 import com.example.mooby.data.entity.Meta
 import com.example.mooby.data.entity.TransactionEY
 import com.example.mooby.data.entity.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.tasks.await
 
 class Repository(
-    private val userDao: UserDAO,
-    private val metaDao: MetaDAO,
-    private val transactionDao: TransactionDAO,
+    private val auth: FirebaseAuth = FirebaseAuth.getInstance(),
+    private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
 ) {
 
-    private val firestore = FirebaseFirestore.getInstance()
-    private val auth = FirebaseAuth.getInstance()
-
-    private fun uid(): String = auth.currentUser?.uid ?: ""
-
-    // ------------------ USERS ---------------------
-
-    suspend fun saveUser(user: User) {
-        userDao.insertUser(user)
-
-        firestore.collection("users")
-            .document(uid())
-            .set(user)
+    suspend fun saveTransaction(t: TransactionEY) {
+        val id = if (t.id.isEmpty()) db.collection("transactions").document().id else t.id
+        val toSave = t.copy(id = id)
+        db.collection("transactions").document(id).set(toSave).await()
     }
 
-    suspend fun getUser(): User? =
-        userDao.getUserById(uid())
-
-    // ------------------ METAS ---------------------
-
-    fun getMetas(): Flow<List<Meta>> =
-        metaDao.getMetasByUserId(uid())
+    fun getTransactions() = callbackFlow {
+        val uid = auth.currentUser?.uid ?: ""
+        val listener = db.collection("transactions")
+            .whereEqualTo("userId", uid)
+            .orderBy("timestamp")
+            .addSnapshotListener { snapshot, error ->
+                if (error != null) { close(error); return@addSnapshotListener }
+                val list = snapshot?.toObjects(TransactionEY::class.java) ?: emptyList()
+                trySend(list)
+            }
+        awaitClose { listener.remove() }
+    }
 
     suspend fun saveMeta(meta: Meta) {
-        metaDao.insertMeta(meta)
-
-        firestore.collection("users")
-            .document(uid())
-            .collection("goals")
-            .add(meta)
+        val id = meta.id.toString().ifEmpty { db.collection("metas").document().id }
+        db.collection("metas").document(id).set(meta).await()
     }
 
-    // ------------------ TRANSAÇÕES ----------------
+    fun getMetas() = callbackFlow<List<Meta>> {
+        val uid = auth.currentUser?.uid ?: ""
+        val listener = db.collection("metas")
+            .whereEqualTo("userId", uid)
+            .addSnapshotListener { snapshot, error ->
+                if (error != null) { close(error); return@addSnapshotListener }
+                val list = snapshot?.toObjects(Meta::class.java) ?: emptyList()
+                trySend(list)
+            }
+        awaitClose { listener.remove() }
+    }
 
-    fun getTransactions(): Flow<List<TransactionEY>> =
-        transactionDao.getTransactionsByUserId(uid())
+    suspend fun saveUser(user: User) {
+        db.collection("users").document(user.userId).set(user).await()
+    }
 
-    suspend fun saveTransaction(t: TransactionEY) {
-        transactionDao.insertTransaction(t)
-
-        firestore.collection("users")
-            .document(uid())
-            .collection("transactions")
-            .add(t)
+    suspend fun getUser(): User? {
+        val uid = auth.currentUser?.uid ?: return null
+        return db.collection("users").document(uid).get().await().toObject(User::class.java)
     }
 }

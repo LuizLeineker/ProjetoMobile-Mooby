@@ -1,26 +1,22 @@
 package com.example.mooby
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
-import com.example.mooby.navigation.Navigation
+import androidx.compose.material3.Surface
+import androidx.navigation.compose.rememberNavController
 import com.example.mooby.ui.theme.MoobyTheme
-import com.google.firebase.FirebaseApp
+import com.example.mooby.navigation.NavGraph
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        // ✅ Garante que o Firebase seja inicializado corretamente
-        FirebaseApp.initializeApp(this)
-        Log.d("FirebaseInit", "✅ Firebase inicializado com sucesso")
-
-        enableEdgeToEdge()
         setContent {
             MoobyTheme {
-                Navigation()
+                Surface {
+                    val navController = rememberNavController()
+                    NavGraph(navController = navController)
+                }
             }
         }
     }

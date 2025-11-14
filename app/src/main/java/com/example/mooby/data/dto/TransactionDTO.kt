@@ -3,9 +3,9 @@ package com.example.mooby.data.dto
 data class TransactionDTO(
     var id: String = "",
     var userId: String = "",
-    var tipo: String = "",
+    var type: String = "",
     var category: String = "",
-    var value: Double = 0.0,
-    var data: String = "",
+    var amount: Double = 0.0,
+    var timestamp: Long = 0L,
     var description: String = ""
 )

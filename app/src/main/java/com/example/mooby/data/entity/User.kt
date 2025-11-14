@@ -7,7 +7,7 @@ import com.example.mooby.utils.Helper
 @Entity(tableName = Helper.TABLE_USERS)
 data class User(
     @PrimaryKey
-    val userId: String, // Firebase UID
+    val userId: String,
     val name: String,
     val email: String,
     val saldoInicial: Double = 0.0

@@ -1,6 +1,6 @@
 package com.example.mooby.data.dto
 
 data class TypeSummary(
-    val tipo: String,
+    val type: String,
     val total: Double
 )

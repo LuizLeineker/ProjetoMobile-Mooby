@@ -8,9 +8,9 @@ import com.example.mooby.utils.Helper
 data class Meta(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
-    val userId: String, // Firebase UID
-    val title: String,
-    val targetValue: Double,
-    val progress: Double,
-    val deadline: Long
+    val userId: String = "",
+    val title: String = "",
+    val targetValue: Double = 0.0,
+    val progress: Double = 0.0,
+    val deadline: Long = 0L
 )

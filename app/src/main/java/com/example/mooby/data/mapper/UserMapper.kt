@@ -3,23 +3,20 @@ package com.example.mooby.data.mapper
 import com.example.mooby.data.dto.UserDTO
 import com.example.mooby.data.entity.User
 
-// Responsavel por conectar os valores da firebase (DTO) com os ROM (entity)
-// String -> Int
-
-fun User.toDTO(): UserDTO {
-    return UserDTO(
-        id = this.id.toString(),
+fun UserDTO.toEntity(): User {
+    return User(
+        userId = this.userId,
         name = this.name,
         email = this.email,
-        valueInitial = this.valueInitial
+        saldoInicial = this.saldoInicial
     )
 }
 
-fun UserDTO.toEntity(): User {
-    return User(
-        id = this.id.toIntOrNull() ?: 0,
+fun User.toDTO(): UserDTO {
+    return UserDTO(
+        userId = this.userId,
         name = this.name,
         email = this.email,
-        valueInitial = this.valueInitial
+        saldoInicial = this.saldoInicial
     )
 }
