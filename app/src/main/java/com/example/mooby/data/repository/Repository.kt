@@ -9,15 +9,26 @@ import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.tasks.await
 
+object FirebaseConfig {
+    private const val USE_LOCAL_EMULATOR = true
+    val db: FirebaseFirestore by lazy {
+        FirebaseFirestore.getInstance().apply {
+            if (USE_LOCAL_EMULATOR) {
+                useEmulator("10.0.2.2", 8080)
+            }
+        }
+    }
+}
+
 class Repository(
     private val auth: FirebaseAuth = FirebaseAuth.getInstance(),
-    private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
+    private val db: FirebaseFirestore = FirebaseConfig.db
 ) {
 
+    // Transações
     suspend fun saveTransaction(t: TransactionEY) {
-        val id = if (t.id.isEmpty()) db.collection("transactions").document().id else t.id
-        val toSave = t.copy(id = id)
-        db.collection("transactions").document(id).set(toSave).await()
+        val id = if (t.id.isNullOrEmpty()) db.collection("transactions").document().id else t.id
+        db.collection("transactions").document(id).set(t.copy(id = id)).await()
     }
 
     fun getTransactions() = callbackFlow {
@@ -27,15 +38,16 @@ class Repository(
             .orderBy("timestamp")
             .addSnapshotListener { snapshot, error ->
                 if (error != null) { close(error); return@addSnapshotListener }
-                val list = snapshot?.toObjects(TransactionEY::class.java) ?: emptyList()
-                trySend(list)
+                trySend(snapshot?.toObjects(TransactionEY::class.java) ?: emptyList())
             }
         awaitClose { listener.remove() }
     }
 
+    // Metas
     suspend fun saveMeta(meta: Meta) {
-        val id = meta.id.toString().ifEmpty { db.collection("metas").document().id }
-        db.collection("metas").document(id).set(meta).await()
+        // Aqui id pode ser Int ou String. Para Firebase, vamos gerar String única:
+        val id = meta.id?.toString()?.takeIf { it.isNotEmpty() } ?: db.collection("metas").document().id
+        db.collection("metas").document(id).set(meta.copy(id = id.toIntOrNull())).await()
     }
 
     fun getMetas() = callbackFlow<List<Meta>> {
@@ -44,12 +56,12 @@ class Repository(
             .whereEqualTo("userId", uid)
             .addSnapshotListener { snapshot, error ->
                 if (error != null) { close(error); return@addSnapshotListener }
-                val list = snapshot?.toObjects(Meta::class.java) ?: emptyList()
-                trySend(list)
+                trySend(snapshot?.toObjects(Meta::class.java) ?: emptyList())
             }
         awaitClose { listener.remove() }
     }
 
+    // Usuário
     suspend fun saveUser(user: User) {
         db.collection("users").document(user.userId).set(user).await()
     }

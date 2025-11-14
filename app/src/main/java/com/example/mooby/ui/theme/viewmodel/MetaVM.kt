@@ -21,7 +21,9 @@ class MetaViewModel(private val repository: Repository) : ViewModel() {
     private val _state = MutableStateFlow<MetaState>(MetaState.Idle)
     val state: StateFlow<MetaState> = _state.asStateFlow()
 
-    init { fetchMetas() }
+    init {
+        fetchMetas()
+    }
 
     fun fetchMetas() {
         viewModelScope.launch {
@@ -40,8 +42,10 @@ class MetaViewModel(private val repository: Repository) : ViewModel() {
         viewModelScope.launch {
             try {
                 _state.value = MetaState.Loading
-                repository.saveMeta(meta)
-                fetchMetas()
+                // Garante que um ID será gerado se estiver nulo
+                val metaToSave = if (meta.id == null || meta.id == 0) meta.copy(id = null) else meta
+                repository.saveMeta(metaToSave)
+                fetchMetas() // atualiza lista após salvar
             } catch (e: Exception) {
                 _state.value = MetaState.Error(e.message ?: "Erro ao salvar meta")
             }

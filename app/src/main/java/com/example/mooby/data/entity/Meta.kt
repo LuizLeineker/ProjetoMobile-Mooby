@@ -7,7 +7,7 @@ import com.example.mooby.utils.Helper
 @Entity(tableName = Helper.TABLE_META)
 data class Meta(
     @PrimaryKey(autoGenerate = true)
-    val id: Int = 0,
+    val id: Int? = null, // null para gerar automático
     val userId: String = "",
     val title: String = "",
     val targetValue: Double = 0.0,

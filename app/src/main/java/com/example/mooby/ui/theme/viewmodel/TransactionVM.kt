@@ -21,7 +21,9 @@ class TransactionViewModel(private val repository: Repository) : ViewModel() {
     private val _state = MutableStateFlow<TransactionState>(TransactionState.Idle)
     val state: StateFlow<TransactionState> = _state.asStateFlow()
 
-    init { fetchTransactions() }
+    init {
+        fetchTransactions()
+    }
 
     fun fetchTransactions() {
         viewModelScope.launch {
@@ -41,7 +43,7 @@ class TransactionViewModel(private val repository: Repository) : ViewModel() {
             try {
                 _state.value = TransactionState.Loading
                 repository.saveTransaction(transaction)
-                fetchTransactions()
+                fetchTransactions() // atualiza lista após salvar
             } catch (e: Exception) {
                 _state.value = TransactionState.Error(e.message ?: "Erro ao salvar transação")
             }

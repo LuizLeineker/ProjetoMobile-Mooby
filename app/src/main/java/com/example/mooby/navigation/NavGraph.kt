@@ -25,7 +25,7 @@ fun NavGraph(
 ) {
     val context = LocalContext.current
 
-    // Repository
+    // Repository: já decide se usa emulador local ou Firestore Cloud
     val repository = Repository()
 
     // ViewModels
